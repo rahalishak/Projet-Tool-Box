@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.94 scan initiated Mon Jun 24 13:01:04 2024 as: nmap -oX C:\\Users\\ishak\\Documents\\ESI-2023-2024\\Projet-Tool-Box\\result_nmap\\rapport.xml -sV -sS -sU -Pn -p1-1024 192.168.1.107 -->
+<nmaprun scanner="nmap" args="nmap -oX C:\\Users\\ishak\\Documents\\ESI-2023-2024\\Projet-Tool-Box\\result_nmap\\rapport.xml -sV -sS -sU -Pn -p1-1024 192.168.1.107" start="1719226864" startstr="Mon Jun 24 13:01:04 2024" version="7.94" xmloutputversion="1.05">
+<scaninfo type="syn" protocol="tcp" numservices="1024" services="1-1024"/>
+<scaninfo type="udp" protocol="udp" numservices="1024" services="1-1024"/>

